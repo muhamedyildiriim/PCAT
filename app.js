@@ -1,13 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const path = require('path');
-const Photo = require('./models/Photo')
+const Photo = require('./models/Photo');
 
 const app = express();
 
 // CONNECT DB
-mongoose.connect('mongodb://localhost/pcat-test-db', {
-})
+mongoose.connect('mongodb://localhost/pcat-test-db', {});
 
 // TEMPLATE ENGINE
 app.set('view engine', 'ejs');
@@ -17,20 +16,23 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
 // ROUTES
 app.get('/', async (req, res) => {
-  const photos = await Photo.find({})
-  res.render('index', {photos});
+  const photos = await Photo.find({});
+  res.render('index', { photos });
 });
 
 app.get('/index.html', async (req, res) => {
-  const photos = await Photo.find({})
-  res.render('index', {photos});
+  const photos = await Photo.find({});
+  res.render('index', { photos });
 });
 
-app.get('/photo.html', (req, res) => {
-  res.render('photo');
+app.get('/photos/:id', async (req, res) => {
+  // console.log(req.params.id)
+  const photo = await Photo.findById(req.params.id)
+  res.render('photo', {
+    photo
+  });
 });
 
 app.get('/contact.html', (req, res) => {
@@ -42,9 +44,9 @@ app.get('/about.html', (req, res) => {
 });
 
 app.post('/photos', async (req, res) => {
-  await Photo.create(req.body)
-  console.log(req.body)
-  res.redirect('/')
+  await Photo.create(req.body);
+  console.log(req.body);
+  res.redirect('/');
 });
 
 const port = 3000;
