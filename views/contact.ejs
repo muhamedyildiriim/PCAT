@@ -83,7 +83,7 @@ https://templatemo.com/tm-552-video-catalog
                         <div class="row">
                             <div class="col-lg-6 mb-5">
 
-                                <form id="contact-form" method="POST" action="/photos" class="tm-contact-form">
+                                <form id="contact-form" method="POST" action="/photos" class="tm-contact-form" enctype="multipart/form-data">
 
                                   <div class="form-group">
                                     <input type="text" name="title" class="form-control rounded-0" placeholder="Title" required="" />
@@ -92,6 +92,10 @@ https://templatemo.com/tm-552-video-catalog
                                   <div class="form-group">
                                     <textarea rows="8" name="detail" class="form-control rounded-0" placeholder="Detail"
                                               required=""></textarea>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <input type="file" name="image" class="form-control-file fournded-0">
                                   </div>
 
                                   <div class="form-group mb-0">
