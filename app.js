@@ -20,7 +20,11 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(fileUpload());
-app.use(methodOverride('_method'));
+app.use(
+  methodOverride('_method', {
+    methods: ['POST', 'GET'],
+  })
+);
 
 // ROUTES
 app.get('/', async (req, res) => {
@@ -50,7 +54,7 @@ app.get('/about.html', (req, res) => {
 });
 
 app.post('/photos', async (req, res) => {
-  console.log(req.files.image);
+  // console.log(req.files.image);
   // await Photo.create(req.body);
   // res.redirect('/');
 
@@ -80,12 +84,20 @@ app.get('/photos/edit/:id', async (req, res) => {
 });
 
 app.put('/photos/:id', async (req, res) => {
-  const photo = await Photo.findOne({_id : req.params.id})
+  const photo = await Photo.findOne({ _id: req.params.id });
   photo.title = req.body.title;
   photo.detail = req.body.detail;
   photo.save();
 
-  res.redirect(`/photos/${req.params.id}`)
+  res.redirect(`/photos/${req.params.id}`);
+});
+
+app.delete('/photos/:id', async (req, res) => {
+  const photo = await Photo.findOne({ _id: req.params.id });
+  let deletedImage = __dirname + '/public' + photo.image;
+  fs.unlinkSync(deletedImage);
+  await Photo.findByIdAndDelete(req.params.id);
+  res.redirect('/');
 });
 
 const port = 3000;
