@@ -9,7 +9,7 @@ const pageController = require('./controllers/pageControllers')
 const app = express();
 
 // CONNECT DB
-mongoose.connect('mongodb+srv://muhamedd:pM56Gn7GxtJgfDP@cluster0.bxpyoz4.mongodb.net/pcat-db?retryWrites=true&w=majority&appName=Cluster0', {})
+mongoose.connect('mongodb+srv://muhamedd:pM56Gn7GxtJgfDP@cluster0.bxpyoz4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {})
 .then(() => {
   console.log('DB Connected')
 }).catch(() => {
